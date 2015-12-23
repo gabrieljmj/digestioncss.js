@@ -1,0 +1,82 @@
+digestioncss.js
+================
+![](https://img.shields.io/npm/v/digestioncss.svg)
+
+Cleans up your HTML code from CSS.
+
+## Install
+```bash
+$ npm install --save-dev digestioncss
+```
+
+## Usage
+You have a HTML file
+```html
+<!-- file.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="hello" style="background:red">Hello!</div>
+</body>
+</html>
+```
+so you want take all styles attributes from HTML elements and put them on a CSS file. With **digestioncss.js**,
+ just do that:
+ ```js
+ var DigestionCSS = require('digestioncss');
+ 
+ new DigestionCSS().digest({
+    file: 'file.html',
+    dest: 'public/css/file.css'
+ });
+ ```
+ If the destination file already exists and is a CSS file, both will be joined. If not, it will be created. Also a link element referencing it will be added on the head of the HTML file.
+ ```css
+ #hello{background:red;}
+ ```
+ ```html
+<!-- file.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="public/css/file.css" type="text/css">
+</head>
+<body>
+    <div id="hello">Hello!</div>
+</body>
+</html>
+```
+
+### Minifiers and beautifiers
+There's options to enable beautifiers or minifiers for HTML and CSS. If the beautifier for a language is unabled, so it will be minified and vise-versa.
+
+#### Beautify
+Language|Default value
+--------|-------------
+HTML|```true```
+CSS|```false```
+
+#### Minify
+Language|Default value
+--------|-------------
+HTML|```false```
+CSS|```true```
+
+#### Example
+```js
+ new DigestionCSS().digest({
+    file: 'file.html',
+    dest: 'public/css/file.css',
+    beautify: {
+        html: false,
+        css: true
+    }
+ });
+```
+ 
+# License
+[MIT License](https://github.com/gabrieljmj/digestioncss.js/blob/master/LICENSE.md) 2015 © Gabriel Jacinto.

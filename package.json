@@ -1,0 +1,15 @@
+{
+  "name": "digestioncss",
+  "repository": "gabrieljmj/digestioncss.js",
+  "version": "0.0.1",
+  "description": "Cleans up your HTML code from CSS",
+  "main": "src/digestioncss.js",
+  "author": "GabrielJMJ",
+  "license": "MIT",
+  "dependencies": {
+    "clean-css": "^3.4.8",
+    "html-minifier": "^1.0.0",
+    "js-beautify": "^1.5.10",
+    "jsdom": "^7.2.1"
+  }
+}
