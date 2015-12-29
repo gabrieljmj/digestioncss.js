@@ -22,44 +22,46 @@ digestioncss.prototype.digest = function (config) {
       elements = document.querySelectorAll('*[style][id]'),
       styles = {};
 
-    for (var k in elements) {
-      var el = elements[k];
+    if (!!elements.length) {
+      for (var k in elements) {
+        var el = elements[k];
 
-      if (el.id != '') {
-        styles[el.id] = el.getAttribute('style');
-        el.removeAttribute('style');
+        if (el.id != '') {
+          styles[el.id] = el.getAttribute('style');
+          el.removeAttribute('style');
+        }
       }
-    }
 
-    var style = '';
+      var style = '';
 
-    for (var k in styles) {
-      style += '#' + k + '{' + styles[k] + '}';
-    }
-
-    if(fileExists(config.dest)) {
-      style = fs.readFileSync(config.dest) + style;
-    }
-
-    // Saves the CSS file
-    fs.writeFile(config.dest, createCss(config, style), function (err) {
-      if (err) {
-        console.error(err);
+      for (var k in styles) {
+        style += '#' + k + '{' + styles[k] + '}';
       }
-    });
 
-    // Creates a link element with the CSS file
-    if (!document.querySelectorAll('link[href="' + config.dest + '"]').length) {
-      var link = createLink(document, config.dest);
-      document.head.appendChild(link);
-    }
-
-    // Insert the link in the head of the file and save
-    fs.writeFile(config.newFile || config.file, createHtml(config, '<!DOCTYPE html>' + document.documentElement.outerHTML), function (err) {
-      if (err) {
-        throw Error(err);
+      if(fileExists(config.dest)) {
+        style = fs.readFileSync(config.dest) + style;
       }
-    });
+
+      // Saves the CSS file
+      fs.writeFile(config.dest, createCss(config, style), function (err) {
+        if (err) {
+          console.error(err);
+        }
+      });
+
+      // Creates a link element with the CSS file
+      if (!document.querySelectorAll('link[href="' + config.dest + '"]').length) {
+        var link = createLink(document, config.dest);
+        document.head.appendChild(link);
+      }
+
+      // Insert the link in the head of the file and save
+      fs.writeFile(config.newFile || config.file, createHtml(config, '<!DOCTYPE html>' + document.documentElement.outerHTML), function (err) {
+        if (err) {
+          throw Error(err);
+        }
+      });
+    }
   });
 }
 
