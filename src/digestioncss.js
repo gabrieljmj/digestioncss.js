@@ -55,7 +55,7 @@ digestioncss.prototype.digest = function (config) {
     }
 
     // Insert the link in the head of the file and save
-    fs.writeFile(config.file, createHtml(config, '<!DOCTYPE html>' + document.documentElement.outerHTML), function (err) {
+    fs.writeFile(config.newFile || config.file, createHtml(config, '<!DOCTYPE html>' + document.documentElement.outerHTML), function (err) {
       if (err) {
         throw Error(err);
       }
@@ -69,7 +69,7 @@ digestioncss.prototype.digest = function (config) {
  * @param {Object} config
  */
 function validateConfig (config) {
-  var validConfigs = ['file', 'dest', 'beautify', 'minify'];
+  var validConfigs = ['file', 'newFile', 'dest', 'beautify', 'minify'];
 
   for (var k = 0, keys = Object.keys(config), len = keys.length; k < len; k++) {
     if (validConfigs.indexOf(keys[k]) <= -1) {
