@@ -51,6 +51,17 @@ so you want take all styles attributes from HTML elements and put them on a CSS 
 </html>
 ```
 
+### Saving html in a new file
+Option to save your generated html in a new file
+
+```js
+new DigestionCSS().digest({
+    file: 'file.html',
+    newFile: 'new-file.html' // Will keep `file.html`
+    dest: 'public/css/file.css'
+});
+```
+
 ### Minifiers and beautifiers
 There's options to enable beautifiers or minifiers for HTML and CSS. If the beautifier for a language is unabled, so it will be minified and vise-versa.
 
