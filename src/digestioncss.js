@@ -1,14 +1,7 @@
 var jsdom = require('jsdom'),
   fs = require('fs'),
-  CleanCSS = require('clean-css'),
-  beautifiers = {
-    html: require('js-beautify').html,
-    css: require('js-beautify').css
-  },
-  minifiers = {
-    html: require('html-minifier').minify,
-    css: new CleanCSS().minify
-  };
+  utils = require('./utils'),
+  CleanCSS = require('clean-css');
 
 var digestioncss = function () {};
 
@@ -38,7 +31,7 @@ digestioncss.prototype.digest = function (config) {
         style += '#' + k + '{' + styles[k] + '}';
       }
 
-      if(fileExists(config.dest)) {
+      if(utils.file.exists(config.dest)) {
         style = fs.readFileSync(config.dest) + style;
       }
 
@@ -85,6 +78,10 @@ function validateConfig (config) {
     throw Error('\'dest\' option is necessary');
   }
 
+  if (!utils.file.exists(config.file)) {
+    throw Error('File not found: ' + config.file);
+  }
+
   if (typeof config.file !== 'string') {
     throw Error('\'file\' option must be string type');
   } else if (typeof config.dest !== 'string') {
@@ -104,10 +101,6 @@ function validateConfig (config) {
       && config.beautify.css && config.minify.css
     ) {
       throw Error('Is not possible beautify and minify the CSS code');
-    }
-
-    if(!fileExists(config.dest)) {
-      fs.writeFileSync(config.dest, 'hi');
     }
   }
 }
@@ -137,8 +130,8 @@ function createHtml (config, html) {
   typeof config.minify != 'undefined'
   && typeof config.minify.html != 'undefined'
   && config.minify.html 
-    ? minifiers.html(html) 
-    : beautifiers.html(html);
+    ? require('html-minifier').minify(html) 
+    : require('js-beautify').html(html);
 
   return newHtml;
 }
@@ -158,21 +151,6 @@ function createLink (document, href) {
   link.setAttribute('type', 'text/css');
 
   return link;
-}
-
-/**
- * Verifies if a file exists
- *
- * @param {String} file
- *
- * @return {Boolean}
- */
-function fileExists (file) {
-  try {
-    return fs.statSync(file).isFile();
-  } catch (e) {
-    return false;
-  }
 }
 
 module.exports = digestioncss;
