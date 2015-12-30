@@ -110,6 +110,11 @@ You can create a file with several files that you want to cleans up from CSS.
     ]
 }
 ```
+
+```bash
+$ digestioncss
+```
+
 ### Without JSON file
 Basic:
 ```bash
