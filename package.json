@@ -1,15 +1,23 @@
 {
   "name": "digestioncss",
   "repository": "gabrieljmj/digestioncss.js",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Cleans up your HTML code from CSS",
   "main": "src/digestioncss.js",
   "author": "GabrielJMJ",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.1",
     "clean-css": "^3.4.8",
     "html-minifier": "^1.0.0",
     "js-beautify": "^1.5.10",
-    "jsdom": "^7.2.1"
+    "jsdom": "^7.2.1",
+    "yargs": "^3.31.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1"
+  },
+  "bin": {
+    "digestioncss": "bin/digestioncss"
   }
 }

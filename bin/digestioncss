@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+var DigestionCSS = require('../src/digestioncss'),
+  utils = require('../src/utils'),
+  chalk = require('chalk'),
+  path = require('path'),
+  argv = require('yargs')
+    .usage('digestioncss <html_file> <destination_file>')
+    .alias('n', 'new_file')
+    /* Beautifiers */
+    .default('minify_css', true)
+    .default('minify_html', false)
+    /* Beatufiers */
+    .default('beautify_css', false)
+    .default('beautify_html', true)
+    .help('help')
+  .argv;
+
+if (Object.keys(argv).length === 7) {
+  var fileName = path.normalize(process.cwd() + '/digestioncss.json');
+
+  if (!utils.file.exists(fileName)) {
+    throw Error('DigestionCSS JSON file not found.')
+  }
+
+  var json = require(fileName);
+
+  if (!json.files) {
+    throw Error('"files" key not found in digestioncss.');
+  } else if (!(json.files instanceof Array)) {
+    throw Error('"files" must be an array.')
+  }
+
+  for (var k = 0, len = json.files.length; k < len; k++) {
+    var curr = json.files[k];
+    digest(curr);
+    console.log('-------------------------');
+  }
+} else {
+  if (!argv._[0] || !argv._[1]) {
+    throw Error('Inform the HTML file and CSS destination.');
+  }
+
+  var options = {file: argv.file, dest: argv.dest, beautify: {}, minify: {}};
+  if (argv.new_file) options.newFile = argv.new_file;
+  if (argv.minify_css != true) options.minify.css = argv.minify_css;
+  if (argv.minify_html != false) options.minify.html = argv.minify_html;
+  if (argv.beautify_css != false) options.beautify.css = argv.beautify_css;
+  if (argv.beautify_html != true) options.beautify.html = argv.beautify_html;
+
+  digest(options);
+}
+
+function digest (file) {
+  file.file = path.normalize(process.cwd() + '/' + file.file);
+  file.dest = path.normalize(process.cwd() + '/' + file.dest);
+  if (file.newFile) file.newFile = path.normalize(process.cwd() + '/' + file.newFile);
+
+  console.log(chalk.yellow('Digesting file: ') + file.file);
+  new DigestionCSS().digest(file);
+  console.log(chalk.yellow('File digested: ') + file.file);
+}
+
+console.log(chalk.green('Done!'));
