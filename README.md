@@ -88,6 +88,41 @@ CSS|```true```
     }
  });
 ```
- 
+
+## Command line
+You can use via command line also.
+### ```digestioncss.json```
+You can create a file with several files that you want to cleans up from CSS.
+```json
+{
+    "files": [
+        {
+            "file": "foo.html",
+            "dest": "css/foocss.css"
+        },
+        {
+            "file": "bar.html",
+            "dest": "css/barcss.css",
+            "minify": {
+                "html": true
+            }
+        }
+    ]
+}
+```
+### Without JSON file
+Basic:
+```bash
+$ digestioncss foo.html css/foocss.css
+```
+#### Options
+Option | Description
+------- | ---------
+```-n <file>```/```--new_file <file>``` | Sends the new HTML to another file.
+```--minify_css``` | Enable minifier for CSS.
+```--minify_html``` | Enable minifier for HTML.
+```--beautify_css``` | Enable beautifier for CSS.
+```--beautify_html``` | Enable beautifier for HTML.
+
 # License
 [MIT License](https://github.com/gabrieljmj/digestioncss.js/blob/master/LICENSE.md) 2015 © Gabriel Jacinto.

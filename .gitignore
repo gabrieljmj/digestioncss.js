@@ -1,3 +1,5 @@
 node_modules/
 *.html
 *.css
+test/
+npm-debug.log
