@@ -52,9 +52,18 @@ if (Object.keys(argv).length === 7) {
 }
 
 function digest (file) {
-  file.file = path.normalize(process.cwd() + '/' + file.file);
-  file.dest = path.normalize(process.cwd() + '/' + file.dest);
-  if (file.newFile) file.newFile = path.normalize(process.cwd() + '/' + file.newFile);
+  file.file = path.isAbsolute(file.file)
+    ? file.file
+    : path.normalize(process.cwd() + '/' + file.file);
+  file.dest = path.isAbsolute(file.dest)
+    ? file.dest
+    : path.normalize(process.cwd() + '/' + file.dest);
+
+  if (file.newFile) {
+    file.newFile = path.isAbsolute(file.dest)
+      ? file.newFile
+      : path.normalize(process.cwd() + '/' + file.newFile);
+  }
 
   console.log(chalk.yellow('Digesting file: ') + file.file);
   new DigestionCSS().digest(file);
