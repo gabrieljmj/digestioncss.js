@@ -16,22 +16,22 @@ You have a HTML file
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 </head>
 <body>
-    <div id="hello" style="background:red">Hello!</div>
+  <div id="hello" style="background:red">Hello!</div>
 </body>
 </html>
 ```
 so you want take all styles attributes from HTML elements and put them on a CSS file. With **digestioncss.js**,
  just do that:
  ```js
- var DigestionCSS = require('digestioncss');
+var DigestionCSS = require('digestioncss');
  
- new DigestionCSS().digest({
-    file: 'file.html',
-    dest: 'public/css/file.css'
- });
+new DigestionCSS().digest({
+  file: 'file.html',
+  dest: 'public/css/file.css'
+});
  ```
  If the destination file already exists and is a CSS file, both will be joined. If not, it will be created. Also a link element referencing it will be added on the head of the HTML file.
  ```css
@@ -42,23 +42,34 @@ so you want take all styles attributes from HTML elements and put them on a CSS 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="public/css/file.css" type="text/css">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="public/css/file.css" type="text/css">
 </head>
 <body>
-    <div id="hello">Hello!</div>
+  <div id="hello">Hello!</div>
 </body>
 </html>
 ```
 
-### Saving html in a new file
-Option to save your generated html in a new file
+### Saving HTML in a new file
+Option to save your generated HTML in a new file.
 
 ```js
 new DigestionCSS().digest({
-    file: 'file.html',
-    newFile: 'new-file.html' // Will keep `file.html`
-    dest: 'public/css/file.css'
+  file: 'file.html',
+  newFile: 'new-file.html' // Will keep `file.html`
+  dest: 'public/css/file.css'
+});
+```
+
+### Backup the original HTML
+The option ```backupFile``` saves a backup from the original HTML.
+
+```js
+new DigestionCSS().digest({
+  file: 'file.html',
+  backupFile: 'backup-file.html'
+  dest: 'public/css/file.css'
 });
 ```
 
@@ -79,14 +90,14 @@ CSS|```true```
 
 #### Example
 ```js
- new DigestionCSS().digest({
-    file: 'file.html',
-    dest: 'public/css/file.css',
-    beautify: {
-        html: false,
-        css: true
-    }
- });
+new DigestionCSS().digest({
+  file: 'file.html',
+  dest: 'public/css/file.css',
+  beautify: {
+    html: false,
+    css: true
+  }
+});
 ```
 
 ## Command line
@@ -124,6 +135,7 @@ $ digestioncss foo.html css/foocss.css
 Option | Description
 ------- | ---------
 ```-n <file>```/```--new_file <file>``` | Sends the new HTML to another file.
+```-b <file>```/```--backup_file <file>``` | Saves a backup from the original HTML.
 ```--minify_css``` | Enable minifier for CSS.
 ```--minify_html``` | Enable minifier for HTML.
 ```--beautify_css``` | Enable beautifier for CSS.

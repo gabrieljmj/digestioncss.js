@@ -7,6 +7,7 @@ var DigestionCSS = require('../src/digestioncss'),
   argv = require('yargs')
     .usage('digestioncss <html_file> <destination_file>')
     .alias('n', 'new_file')
+    .alias('b', 'backup_file')
     /* Beautifiers */
     .default('minify_css', true)
     .default('minify_html', false)
@@ -43,6 +44,7 @@ if (Object.keys(argv).length === 7) {
 
   var options = {file: argv.file, dest: argv.dest, beautify: {}, minify: {}};
   if (argv.new_file) options.newFile = argv.new_file;
+  if (argv.backup_file) options.backupFile = argv.backup_file;
   if (argv.minify_css != true) options.minify.css = argv.minify_css;
   if (argv.minify_html != false) options.minify.html = argv.minify_html;
   if (argv.beautify_css != false) options.beautify.css = argv.beautify_css;
@@ -52,22 +54,26 @@ if (Object.keys(argv).length === 7) {
 }
 
 function digest (file) {
-  file.file = path.isAbsolute(file.file)
-    ? file.file
-    : path.normalize(process.cwd() + '/' + file.file);
-  file.dest = path.isAbsolute(file.dest)
-    ? file.dest
-    : path.normalize(process.cwd() + '/' + file.dest);
+  file.file = getPath(file.file);
+  file.dest = getPath(file.dest);
 
   if (file.newFile) {
-    file.newFile = path.isAbsolute(file.dest)
-      ? file.newFile
-      : path.normalize(process.cwd() + '/' + file.newFile);
+    file.newFile = getPath(file.newFile);
+  }
+
+  if (file.backupFile) {
+    file.backupFile = getPath(file.backupFile);
   }
 
   console.log(chalk.yellow('Digesting file: ') + file.file);
   new DigestionCSS().digest(file);
   console.log(chalk.yellow('File digested: ') + file.file);
 }
+
+function getPath (file) {
+  return path.isAbsolute(file) 
+    ? file
+    : path.normalize(process.cwd() + '/' + file);
+};
 
 console.log(chalk.green('Done!'));

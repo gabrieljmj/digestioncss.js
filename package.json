@@ -1,7 +1,7 @@
 {
   "name": "digestioncss",
   "repository": "gabrieljmj/digestioncss.js",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Cleans up your HTML code from CSS",
   "main": "src/digestioncss.js",
   "author": "GabrielJMJ",

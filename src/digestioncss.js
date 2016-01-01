@@ -1,3 +1,10 @@
+/**
+ * DigestionCSS
+ *
+ * @author Gabriel Jacinto aka. GabrielJMJ <gamjj74@hotmail.com>
+ * @license MIT License
+ */
+
 var jsdom = require('jsdom'),
   fs = require('fs'),
   utils = require('./utils'),
@@ -16,6 +23,15 @@ digestioncss.prototype.digest = function (config) {
       styles = {};
 
     if (!!elements.length) {
+      // Creates a backup file with the original HTML
+      if (config.backupFile) {
+        fs.writeFile(config.backupFile, fs.readFileSync(config.file), function (err) {
+          if (err) {
+            throw Error(err);
+          }
+        });
+      }
+
       for (var k in elements) {
         var el = elements[k];
 
@@ -64,7 +80,7 @@ digestioncss.prototype.digest = function (config) {
  * @param {Object} config
  */
 function validateConfig (config) {
-  var validConfigs = ['file', 'newFile', 'dest', 'beautify', 'minify'];
+  var validConfigs = ['file', 'newFile', 'backupFile', 'dest', 'beautify', 'minify'];
 
   for (var k = 0, keys = Object.keys(config), len = keys.length; k < len; k++) {
     if (validConfigs.indexOf(keys[k]) <= -1) {
@@ -79,7 +95,7 @@ function validateConfig (config) {
   }
 
   if (!utils.file.exists(config.file)) {
-    throw Error('File not found: ' + config.file);
+    throw Error('File not found: ' + config.file)
   }
 
   if (typeof config.file !== 'string') {
