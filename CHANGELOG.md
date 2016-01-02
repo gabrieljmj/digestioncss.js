@@ -3,7 +3,11 @@ Change log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v0.3.0 - 01/12/2016
+## v0.3.1 - 02/01/2016
+### Fixed:
+* Command line tool wasn't working.
+
+## v0.3.0 - 01/01/2016
 ### Added:
 * [#1-167761018](https://github.com/gabrieljmj/digestioncss.js/pull/1#issuecomment-167761018) Option to save a backup from the original HTML.
 
@@ -27,7 +31,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 First release.
 
 ## Releases comparisons
-* [Unreleased](https://github.com/gabrieljmj/digestioncss.js/compare/v0.3.0...HEAD)
+* [Unreleased](https://github.com/gabrieljmj/digestioncss.js/compare/v0.3.1...HEAD)
+* [0.3.1](https://github.com/gabrieljmj/digestioncss.js/compare/v0.3.0...v0.3.1)
 * [0.3.0](https://github.com/gabrieljmj/digestioncss.js/compare/v0.2.0...v0.3.0)
 * [0.2.0](https://github.com/gabrieljmj/digestioncss.js/compare/v0.1.0...v0.2.0)
 * [0.1.0](https://github.com/gabrieljmj/digestioncss.js/compare/v0.0.1...v0.1.0)
